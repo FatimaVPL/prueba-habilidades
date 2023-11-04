@@ -1,69 +1,54 @@
-import logo from './logo.svg';
-import './App.css';
-import Task from './Componentes/Task'
+import React, { useState } from 'react';
+import TaskList from './Componentes/TaskList';
+import TaskForm from './Componentes/TaskForm'
 
 function App() {
   const [tasks, setTasks] = useState([]);
-  const [newTaskText, setNewTaskText] = useState("");
+  const [filter, setFilter] = useState('all');
 
-  const addTask = () => {
-    if (newTaskText) {
-      const newTask = {
-        id: Date.now(),
-        text: newTaskText,
-        completed: false,
-      };
-      setTasks([...tasks, newTask]);
-      setNewTaskText("");
-    }
-  };
-
-  const toggleComplete = (taskId) => {
-    const updatedTasks = tasks.map((task) => {
-      if (task.id === taskId) {
-        return { ...task, completed: !task.completed };
-      }
-      return task;
-    });
-    setTasks(updatedTasks);
-  };
-
-  const editTask = (taskId, newText) => {
-    const updatedTasks = tasks.map((task) => {
-      if (task.id === taskId) {
-        return { ...task, text: newText };
-      }
-      return task;
-    });
-    setTasks(updatedTasks);
+  const addTask = (task) => {
+    setTasks([...tasks, task]);
   };
 
   const deleteTask = (taskId) => {
-    const updatedTasks = tasks.filter((task) => task.id !== taskId);
-    setTasks(updatedTasks);
+    setTasks(tasks.filter((task) => task.id !== taskId));
   };
+
+  const toggleComplete = (taskId) => {
+    setTasks(
+      tasks.map((task) =>
+        task.id === taskId ? { ...task, completed: !task.completed } : task
+      )
+    );
+  };
+
+  const filterTasks = (filter) => {
+    setFilter(filter);
+  };
+
+  const filteredTasks = tasks.filter((task) => {
+    if (filter === 'all') {
+      return true;
+    } else if (filter === 'pending') {
+      return !task.completed;
+    } else {
+      return task.completed;
+    }
+  });
 
   return (
     <div className="App">
-      <h1>Lista de Tareas</h1>
+      <h1>Tareas</h1>
+      <TaskForm addTask={addTask} />
+      <TaskList
+        tasks={filteredTasks}
+        deleteTask={deleteTask}
+        toggleComplete={toggleComplete}
+      />
       <div>
-        <input
-          type="text"
-          value={newTaskText}
-          onChange={(e) => setNewTaskText(e.target.value)}
-        />
-        <button onClick={addTask}>Agregar Tarea</button>
-      </div>
-      <div>
-        {tasks.map((task) => (
-          <Task
-            key={task.id}
-            task={task}
-            onToggleComplete={toggleComplete}
-            onDelete={deleteTask}
-            onEdit={editTask}
-          />
-        ))}
+        <button onClick={() => filterTasks('all')}>Todas</button>
+        <button onClick={() => filterTasks('pending')}>Pendientes</button>
+        <button onClick={() => filterTasks('completed')}>Completadas</button>
       </div>
     </div>
   );
