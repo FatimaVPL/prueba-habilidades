@@ -2,19 +2,25 @@ import React, { useState } from 'react';
 
 function TaskList({ tasks, deleteTask, toggleComplete, editTask }) {
   const [editingTask, setEditingTask] = useState(null);
+  const [editedTask, setEditedTask] = useState(null);
 
   const handleEdit = (task) => {
     if (!task.completed) {
+      setEditedTask({ ...task });
       setEditingTask(task);
     }
   };
 
   const handleSave = (task) => {
-    editTask(task);
-    setEditingTask(null);
+    if (editedTask) {
+      editTask(editedTask);
+      setEditedTask(null);
+      setEditingTask(null);
+    }
   };
 
   const handleCancel = () => {
+    setEditedTask(null);
     setEditingTask(null);
   };
 
@@ -41,21 +47,21 @@ function TaskList({ tasks, deleteTask, toggleComplete, editTask }) {
           />
           {editingTask === task ? (
             <div>
-              <input
-                type="text"
-                value={task.name}
-                onChange={(e) => handleSave({ ...task, name: e.target.value })}
-              />
-              <input
-                type="text"
-                value={task.description}
-                onChange={(e) => handleSave({ ...task, description: e.target.value })}
-              />
-              <input
-                type="date"
-                value={task.dueDate}
-                onChange={(e) => handleSave({ ...task, dueDate: e.target.value })}
-              />
+          <input
+  type="text"
+  value={editedTask.name}
+  onChange={(e) => setEditedTask({ ...editedTask, name: e.target.value })}
+/>
+<input
+  type="text"
+  value={editedTask.description}
+  onChange={(e) => setEditedTask({ ...editedTask, description: e.target.value })}
+/>
+<input
+  type="date"
+  value={editedTask.dueDate}
+  onChange={(e) => setEditedTask({ ...editedTask, dueDate: e.target.value })}
+/>
               <button onClick={() => handleSave(task)}>Guardar</button>
               <button onClick={handleCancel}>Cancelar</button>
             </div>

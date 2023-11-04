@@ -1,11 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TaskList from './Componentes/TaskList';
 import TaskForm from './Componentes/TaskForm'
 
 function App() {
   const [tasks, setTasks] = useState([]);
   const [filter, setFilter] = useState('all');
+  const [visibleTasks, setVisibleTasks] = useState([]);
 
+  useEffect(() => {
+    if (filter === 'all') {
+      setVisibleTasks(tasks);
+    } else if (filter === 'pending') {
+      setVisibleTasks(tasks.filter((task) => !task.completed));
+    } else {
+      setVisibleTasks(tasks.filter((task) => task.completed));
+    }
+  }, [filter, tasks]);
+
+  
   const addTask = (task) => {
     setTasks([...tasks, task]);
   };
@@ -48,20 +60,21 @@ function App() {
     <div className="App">
       <h1>Tareas</h1>
       <TaskForm addTask={addTask} />
+      <p>Tareas: {visibleTasks.length}</p> 
       <TaskList
-        tasks={tasks}
+        tasks={visibleTasks}
         deleteTask={deleteTask}
         toggleComplete={toggleComplete}
         editTask={editTask}
       />
-
       <div>
         <button onClick={() => filterTasks('all')}>Todas</button>
         <button onClick={() => filterTasks('pending')}>Pendientes</button>
-        <button onClick={() => filterTasks('completed')}>Completadas</button>
+        <button onClick={() => filterTasks('completed')}>Completedas</button>
       </div>
     </div>
   );
+  
 }
 
 export default App;
