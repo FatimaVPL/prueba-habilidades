@@ -59,7 +59,7 @@ function App() {
   
   return (
     <div className="App">
-      <h1>Tareas</h1>
+      <h1>Lista de tareas</h1>
       <TaskForm addTask={addTask} />
       <p>Tareas: {visibleTasks.length}</p> 
       <TaskList
