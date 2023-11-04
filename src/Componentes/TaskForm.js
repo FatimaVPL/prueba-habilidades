@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './task.css'
 
 function TaskForm({ addTask }) {
   const [task, setTask] = useState({ name: '', description: '', dueDate: '', completed: false });
@@ -21,14 +22,14 @@ function TaskForm({ addTask }) {
       <input
         type="text"
         name="name"
-        placeholder="Task Name"
+        placeholder="Tarea"
         value={task.name}
         onChange={handleInputChange}
       />
       <input
         type="text"
         name="description"
-        placeholder="Description"
+        placeholder="Descripción"
         value={task.description}
         onChange={handleInputChange}
       />
@@ -38,7 +39,7 @@ function TaskForm({ addTask }) {
         value={task.dueDate}
         onChange={handleInputChange}
       />
-      <button type="submit">Add Task</button>
+      <button type="submit">Agregar tarea</button>
     </form>
   );
 }

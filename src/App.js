@@ -36,15 +36,25 @@ function App() {
     }
   });
 
+  const editTask = (updatedTask) => {
+    setTasks((prevTasks) =>
+      prevTasks.map((task) =>
+        task.id === updatedTask.id ? updatedTask : task
+      )
+    );
+  };
+  
   return (
     <div className="App">
       <h1>Tareas</h1>
       <TaskForm addTask={addTask} />
       <TaskList
-        tasks={filteredTasks}
+        tasks={tasks}
         deleteTask={deleteTask}
         toggleComplete={toggleComplete}
+        editTask={editTask}
       />
+
       <div>
         <button onClick={() => filterTasks('all')}>Todas</button>
         <button onClick={() => filterTasks('pending')}>Pendientes</button>
