@@ -37,9 +37,9 @@ function TaskList({ tasks, deleteTask, toggleComplete, editTask }) {
   };
 
   return (
-    <ul>
-      {tasks.map((task) => (
-        <li key={task.id} className={isOverdue(task.dueDate) && !task.completed ? 'overdue' : ''}>
+    <ul className="task-list">
+    {tasks.map((task) => (
+      <li key={task.id} className={isOverdue(task.dueDate) && !task.completed ? 'overdue' : ''}>
           <input
             type="checkbox"
             checked={task.completed}

@@ -1,5 +1,7 @@
 .App {
-  text-align: center;
+ padding-top: 5%;
+ padding-left: 30%;
+ padding-right: 30%;
 }
 
 .App-logo {
@@ -13,17 +15,52 @@
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+button {
+  background-color: rgb(87, 213, 171);
+  color: #212020;
+  border: none;
+  border-radius: 5px; 
+  padding: 10px 15px; 
+  cursor: pointer; 
+  margin-left: 1%;
 }
 
+button:hover {
+  background-color: #aaf0e4; 
+}
+
+.task-list {
+  list-style: none; 
+  padding: 0; 
+}
+
+
+.task-list li {
+  display: flex; 
+  align-items: center; 
+}
+
+
+.task-list li + li {
+  margin-top: 10px;
+}
+
+
+.task-list input[type="checkbox"] {
+  margin-right: 10px; 
+}
+
+
+.task-list button {
+  margin-left: 10px; 
+}
+
+input {
+  border: 1px solid #ccc; 
+  border-radius: 5px;
+  padding: 8px; 
+  margin: 1%;
+}
 .App-link {
   color: #61dafb;
 }

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './task.css'
 
 function TaskForm({ addTask }) {
   const [task, setTask] = useState({ name: '', description: '', dueDate: '', completed: false });
